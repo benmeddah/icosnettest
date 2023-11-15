@@ -3,7 +3,9 @@ table, th, td {
     border-collapse: collapse;
     }
 
-
+body {
+    font-family: 'Arial', sans-serif;
+}
     header {
         padding: 0px;
         text-align: center;
@@ -48,5 +50,39 @@ table, th, td {
     }
 
     tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .single {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .single h2 {
+        color: #333;
+    }
+
+    .single table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .single th, .single td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .single th {
+        background-color: #444;
+        color: white;
+    }
+
+    .single tr:hover {
         background-color: #f5f5f5;
     }

@@ -9,4 +9,7 @@ frontend.get('/',function (req,rep) {
 frontend.get('/create',function (req,rep) {
     rep.render('create/index')
 })
+frontend.get('/single/:id',function (req,rep) {
+    rep.render('read/single')
+})
 module.exports = frontend;

@@ -26,6 +26,7 @@
                 <th>Price</th>
                 <th>Created At</th>
                 <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,9 @@
                     <td x-text="order.price"></td>
                     <td x-text="order.createdAt"></td>
                     <td x-text="order.status"></td>
+                    <td>
+                        <a :href="'/single/'+order.id">view</a>
+                    </td>
                 </tr>
             </template>
         </tbody>

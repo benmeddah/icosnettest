@@ -21,9 +21,20 @@ module.exports = {
         });
     });
  },
- readOrders() {
+ readOrder(id) {
+    if(id === undefined)
     return new Promise((resolve, reject) => {
         db.all('SELECT * FROM orders', function (err, rows) {
+            if (err) {
+                reject(err.message);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+    else
+    return new Promise((resolve, reject) => {
+        db.get('SELECT * FROM orders where id = ?',[id], function (err, rows) {
             if (err) {
                 reject(err.message);
             } else {
