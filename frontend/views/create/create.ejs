@@ -1,0 +1,51 @@
+<script>
+    function xData() {
+        return {
+            sendForm: async function(ev) {
+              const jsonData = {
+          orderName: ev?.target?.orderName?.value,
+          description: ev?.target?.description?.value,
+          price: ev?.target?.price?.value,
+      };
+      console.log(jsonData);
+        try {
+            const response = await fetch('/order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+              },
+                  body: JSON.stringify(jsonData),
+            });
+  
+            if (response.ok) {
+                alert('Order submitted successfully!');
+                // Add any other success handling logic here
+            } else {
+              alert('Error submitting order. Please try again.');
+                // Add any other error handling logic here
+            }
+        } catch (error) {
+          alert('An unexpected error occurred:', error);
+            // Add any other error handling logic here
+        }
+        }
+    }
+  }
+  </script>
+  <section x-data="xData()" class="create">
+    <form @submit.prevent="sendForm">
+      <h2>Create Order</h2>
+  
+      <label for="orderName">Order Name:</label>
+      <input type="text" id="orderName" name="orderName"  required/>
+  
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="4" ></textarea>
+  
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price"  />
+  
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+  
