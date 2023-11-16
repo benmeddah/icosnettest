@@ -3,8 +3,13 @@ const model = require("../model");
 module.exports = {
 	update: async (req, rep,next) => {
 		try {
-            // is authentified ?
-            const x = await model.updateOrder(req.params.id,req.body);
+            if(!req.body.status)
+            throw new Error("invalid request"); 
+            var x = false;
+            if(!req.body.title && !req.body.price && !req.body.description)
+            x = await model.cancelOrder(req.params.id);
+            else
+            x = await model.updateOrder(req.params.id,req.body);
             
             if(x) rep.send({msg:'Order updated'})
             else throw new Error("error db")

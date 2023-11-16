@@ -1,13 +1,10 @@
     <script>
     function xData() {
         return {
-            sendForm: async function(ev) {
+            cancelOrder: async function(ev) {
                       const jsonData = {
-                  orderName: ev?.target?.orderName?.value,
-                  description: ev?.target?.description?.value,
-                  price: ev?.target?.price?.value,
+                  status: 'Canceled'
               };
-              console.log(jsonData);
                 try {
                     const response = await fetch('/order/'+location.pathname.split('/')[2], {
                         method: 'PUT',
@@ -17,7 +14,33 @@
                           body: JSON.stringify(jsonData),
                     });
           
-                    if (response.ok) {
+                    if (response.ok) { 
+                        alert('Order Canceled!');
+                        this.fetchOrder();
+                    } else {
+                      alert('Error Canceling order. Please try again.');
+                    }
+                } catch (error) {
+                  alert('An unexpected error occurred:', error);
+                }
+                },
+            sendForm: async function(ev) {
+                      const jsonData = {
+                  orderName: ev?.target?.orderName?.value,
+                  description: ev?.target?.description?.value,
+                  price: ev?.target?.price?.value,
+                  status: ev?.target?.status?.value
+              };
+                try {
+                    const response = await fetch('/order/'+location.pathname.split('/')[2], {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json',
+                      },
+                          body: JSON.stringify(jsonData),
+                    });
+          
+                    if (response.ok) { 
                         alert('Order updated successfully!');
                         this.fetchOrder();
                     } else {
@@ -78,8 +101,18 @@
           
               <label for="price">Price:</label>
               <input type="number" id="price" name="price" :value="order.price" />
-          
+              <div style="display: flex; justify-content: space-between;">
+                  <label for="status">Edit Status:</label>
+                  <select id="status" name="status" :value="order.status">
+                      <option :disabled="order.status!='Pending'" value="Pending">Pending</option>
+                      <option :disabled="!['Pending','Processing'].includes(order.status)" value="Processing">Processing</option>
+                      <option :disabled="['Delivered'].includes(order.status)" value="Shipped">Shipped</option>
+                      <option :disabled="order.status=='Delivered'" value="Delivered">Delivered</option>
+                    </select>
+                </div>
+              <br>  
               <button type="submit">Submit Order</button>
+              <button @click="cancelOrder" type="button" style="margin-left: 50px; background-color: chocolate;">Cancel</button>
             </form>
           </section>
     </div>

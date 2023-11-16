@@ -43,6 +43,22 @@ module.exports = {
         });
     });
  },
+ cancelOrder(id){
+    if (id === undefined) {
+        return false;
+    }
+    return new Promise((resolve, reject) => {
+        db.run(`UPDATE orders
+                    SET status = 'Canceled'
+                    WHERE id = ?`,[id],function (err) {
+            if (err) {
+                reject(err.message);
+            } else {
+                resolve(`Order with ID ${id} Canceled.`);
+            }
+        });
+    });
+ },
  updateOrder(id, order) {
     if (id === undefined) {
         return false;
@@ -51,7 +67,6 @@ module.exports = {
     const { orderName:title, description, price, status } = order;
 
     return new Promise((resolve, reject) => {
-
         db.run(`UPDATE orders
                     SET title = ?,
                         description = ?,
