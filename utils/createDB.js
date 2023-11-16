@@ -33,9 +33,17 @@ CREATE TABLE IF NOT EXISTS status (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_order varchar(256),
     status varchar(256) CHECK(status IN ('Pending', 'Processing', 'Shipped', 'Delivered')),
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_order) REFERENCES orders(id)
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 )
+`);
+db.run(`
+CREATE TRIGGER log_status_change
+AFTER UPDATE ON orders
+FOR EACH ROW
+WHEN NEW.status <> OLD.status
+BEGIN
+    INSERT INTO status (id_order, status) VALUES (NEW.id, NEW.status);
+END;
 `);
     console.log('Tables "status","client" and "orders" created successfully.');
 
