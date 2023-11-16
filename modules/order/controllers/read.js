@@ -16,7 +16,6 @@ module.exports = {
     readOne: async (req, rep,next) => {
 		try {
             // is authentified ?
-            console.log(req.params.id);
             const x = await model.readOrder(req.params.id);
             if(x) rep.send({order:x})
             else throw new Error("error db")

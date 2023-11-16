@@ -42,5 +42,28 @@ module.exports = {
             }
         });
     });
- }
+ },
+ updateOrder(id, order) {
+    if (id === undefined) {
+        return false;
+    }
+
+    const { orderName:title, description, price, status } = order;
+
+    return new Promise((resolve, reject) => {
+
+        db.run(`UPDATE orders
+                    SET title = ?,
+                        description = ?,
+                        price = ?,
+                        status = ?
+                    WHERE id = ?`, [title, description, price, status, id], function (err) {
+            if (err) {
+                reject(err.message);
+            } else {
+                resolve(`Order with ID ${id} updated successfully.`);
+            }
+        });
+    });
+}
 }

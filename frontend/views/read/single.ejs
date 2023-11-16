@@ -10,6 +10,32 @@
     <script>
     function xData() {
         return {
+            sendForm: async function(ev) {
+                      const jsonData = {
+                  orderName: ev?.target?.orderName?.value,
+                  description: ev?.target?.description?.value,
+                  price: ev?.target?.price?.value,
+              };
+              console.log(jsonData);
+                try {
+                    const response = await fetch('/order/'+location.pathname.split('/')[2], {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json',
+                      },
+                          body: JSON.stringify(jsonData),
+                    });
+          
+                    if (response.ok) {
+                        alert('Order updated successfully!');
+                        this.fetchOrder();
+                    } else {
+                      alert('Error submitting order. Please try again.');
+                    }
+                } catch (error) {
+                  alert('An unexpected error occurred:', error);
+                }
+                },
             order: [],
             fetchOrder: async function () {
                 try {
@@ -26,12 +52,15 @@
             },
         };
     }
+
+
+
     </script>
 </head>
 <body>
     <h1>Enhanced Order Management System</h1>
     <%- include('../header.ejs') %>
-    <div class="single">
+    <div x-data="xData()" class="single" x-init="fetchOrder">
         <h2>Order Details</h2>
         <table>
             <tr>
@@ -41,7 +70,7 @@
                 <th>Created At</th>
                 <th>Status</th>
             </tr>
-            <tr x-data="xData()" x-init="fetchOrder">
+            <tr>
                 <td x-text="order.title"></td>
                 <td x-text="order.description"></td>
                 <td x-text="order.price"></td>
@@ -49,6 +78,22 @@
                 <td x-text="order.status"></td>
             </tr>
         </table>
+        <section class="create" style="padding: 12px;">
+            <form @submit.prevent="sendForm">
+              <h2>Update Order</h2>
+          
+              <label for="orderName">Order Name:</label>
+              <input type="text" id="orderName" name="orderName" :value="order.title" required/>
+          
+              <label for="description">Description:</label>
+              <textarea id="description" name="description" :value="order.description" rows="4" ></textarea>
+          
+              <label for="price">Price:</label>
+              <input type="number" id="price" name="price" :value="order.price" />
+          
+              <button type="submit">Submit Order</button>
+            </form>
+          </section>
     </div>
 </body>
 </html>
