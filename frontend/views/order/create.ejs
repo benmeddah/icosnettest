@@ -19,6 +19,7 @@
   
             if (response.ok) {
                 alert('Order submitted successfully!');
+                ev?.target?.reset();
                 // Add any other success handling logic here
             } else {
               alert('Error submitting order. Please try again.');

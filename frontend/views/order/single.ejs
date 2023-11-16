@@ -118,7 +118,7 @@
                 </div>
               <br>  
               <button type="submit">Submit Order</button>
-              <button @click="cancelOrder" type="button" style="margin-left: 50px; background-color: chocolate;">Cancel</button>
+              <button :disabled="order?.status!='Pending'" @click="cancelOrder" type="button" :style="'margin-left: 50px; background-color: '+ (order?.status!='Pending'?'#ccc':'chocolate')">Cancel</button>
             </form>
             </template>
           </section>

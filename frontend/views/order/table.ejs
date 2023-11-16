@@ -62,7 +62,7 @@
                     <td x-text="order.createdAt"></td>
                     <td x-text="order.status"></td>
                     <td>
-                        <a :href="'/single/'+order.id">view</a>
+                        <a style="margin-right: 10px;" :href="'/single/'+order.id">Edit</a>
                         <button type="button" @click="deleteHandler(order.id)">delete</button>
                     </td>
                 </tr>
