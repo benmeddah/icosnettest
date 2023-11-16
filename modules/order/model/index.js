@@ -3,15 +3,15 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = new sqlite3.Database('main.db');
 module.exports = {
-    createOrder(orderData) {
+    createOrder(orderData, username) {
         console.log(orderData);
         const orderId = uuidv4();
         const { orderName:title, description, price } = orderData;
         return new Promise((resolve, reject) => {
             db.run(`
-            INSERT INTO orders (id, title, description, price)
-            VALUES (?, ?, ?, ?)`
-        , [orderId, title, description, price], 
+            INSERT INTO orders (id, title, description, price, id_client)
+            VALUES (?, ?, ?, ?, ?)`
+        , [orderId, title, description, price, username ?? null], 
         function (err) {
             if (err) {
                 reject(err.message);

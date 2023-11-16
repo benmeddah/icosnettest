@@ -3,12 +3,14 @@ const model = require("../model");
 module.exports = {
 	create: async (req, rep,next) => {
 		try {
-            // is authentified ?
+            if(!req.session.username)
+            throw new Error("Not Allowed");
             req.session.user_id = 19;
             console.log(req.body);
             if(!req.body.orderName)
                 throw new Error("invalid order")
-            const x = await model.createOrder(req.body);
+             
+            const x = await model.createOrder(req.body,req.session.username);
             if(x) rep.send({msg:'Order added'})
             else throw new Error("error db")
         } catch (error) {

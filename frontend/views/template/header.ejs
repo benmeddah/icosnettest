@@ -14,16 +14,16 @@
             }
         } catch (error) {
           alert('An unexpected error occurred:', error);
-        }
+          }
         }
 </script>
 <header>
     <nav>
         <a href="/">Home</a>
-        <a href="/create">Create Order</a>
         <% if (role=='visitor') { %>
             <a href="/login">Login</a>
-        <% } else { %>
+            <% } else { %>
+            <a href="/create">Create Order</a>
             <button onclick="logout()">Logout</button>
         <% } %>
     </nav>

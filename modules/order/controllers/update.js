@@ -6,7 +6,7 @@ module.exports = {
             if(!req.body.status)
             throw new Error("invalid request"); 
             var x = false;
-            if(!req.body.title && !req.body.price && !req.body.description)
+            if(req.body.title == undefined && req.body.price == undefined && req.body.description == undefined)
             x = await model.cancelOrder(req.params.id);
             else
             x = await model.updateOrder(req.params.id,req.body);

@@ -15,7 +15,11 @@
     <%- include('template/header.ejs',role) %>
     <% switch(page) {
         case 'create' : %>
-        <%- include('order/create.ejs') %>        
+        <% if (role=='client') { %>
+            <%- include('order/create.ejs') %> 
+            <% } else { %>   
+                <h3>Not Allowed</h3>
+                <% } %>        
         <% break;
         case 'all' : %>
         <%- include('order/table.ejs') %>        
@@ -24,7 +28,12 @@
         <%- include('order/single.ejs') %>        
         <% break;
         case 'login' : %>
-        <%- include('client/login.ejs') %>        
+        <% if (role=='visitor') { %>
+        <%- include('client/login.ejs') %> 
+        <% } else { %>   
+            <h3>You're Loged</h3>
+            <% } %>
+ 
         <% break;
         default : %>
         <div>nothing here</div>
