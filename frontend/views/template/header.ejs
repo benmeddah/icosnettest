@@ -1,7 +1,30 @@
+<script>
+    async function logout(ev) {
+      
+        try {
+            const response = await fetch('/client/logout', {
+                method: 'POST',
+                });
+  
+            if (response.ok) {
+                alert('success');
+                location.href = '/';
+            } else {
+              alert('invalid request.');
+            }
+        } catch (error) {
+          alert('An unexpected error occurred:', error);
+        }
+        }
+</script>
 <header>
     <nav>
         <a href="/">Home</a>
         <a href="/create">Create Order</a>
-        <a href="/">Login</a>
+        <% if (role=='visitor') { %>
+            <a href="/login">Login</a>
+        <% } else { %>
+            <button onclick="logout()">Logout</button>
+        <% } %>
     </nav>
 </header>

@@ -10,13 +10,17 @@ config.use(express.urlencoded({extended:false}))
 
 // initialiser les cookies
 config.use(session({
-    secret: 'keyboard cat',
+    secret: 'cookie secret',
     resave: false,
     saveUninitialized: true,
 }))
 config.use((req,rep,next)=>{
-    if(req.session.views==undefined)
-    req.session.views = 0
+    if(req.session.views==undefined){
+    req.session.views = 0,
+    req.session.isAuth = false;
+    req.session.role = 'visitor';
+    req.session.username = undefined;
+    }
 next()
 })
 

@@ -10,8 +10,9 @@
 
 </head>
 <body>
+
     <h1>Enhanced Order Management System</h1>
-    <%- include('template/header.ejs') %>
+    <%- include('template/header.ejs',role) %>
     <% switch(page) {
         case 'create' : %>
         <%- include('order/create.ejs') %>        
@@ -21,6 +22,9 @@
         <% break;
         case 'one' : %>
         <%- include('order/single.ejs') %>        
+        <% break;
+        case 'login' : %>
+        <%- include('client/login.ejs') %>        
         <% break;
         default : %>
         <div>nothing here</div>

@@ -4,12 +4,15 @@ const assets = require('./assets.js');
 const frontend = express.Router();
 frontend.use(assets);
 frontend.get('/',function (req,rep) {
-    rep.render('index',{page:'all'})
+    rep.render('index',{role:req.session.role,page:'all'})
 })
 frontend.get('/create',function (req,rep) {
-    rep.render('index',{page:'create'})
+    rep.render('index',{role:req.session.role,page:'create'})
 })
 frontend.get('/single/:id',function (req,rep) {
-    rep.render('index',{page:'one'})
+    rep.render('index',{role:req.session.role,page:'one'})
+})
+frontend.get('/login',function (req,rep) {
+    rep.render('index',{role:req.session.role,page:'login'})
 })
 module.exports = frontend;

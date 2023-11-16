@@ -1,0 +1,47 @@
+<script>
+    function xData() {
+        return {
+      sendForm: async function(ev,login) {
+      const jsonData = {
+          username: ev?.target?.form?.username?.value,
+          password: ev?.target?.form?.password?.value,
+          operation : login,
+      };
+      console.log(jsonData);
+        try {
+            const response = await fetch('/client', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+              },
+                  body: JSON.stringify(jsonData),
+            });
+  
+            if (response.ok) {
+                alert('success');
+                location.href = '/';
+            } else {
+              alert('invalid request.');
+            }
+        } catch (error) {
+          alert('An unexpected error occurred:', error);
+        }
+        }
+    }
+  }
+  </script>
+<main class="login">
+    <form x-data="xData()">
+        <h2>Login / Register</h2>
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <div style="display: flex;">
+            <button @click="ev=>sendForm(ev,'login')" type="button" style="margin-right: 10px;">Login</button>
+            <button @click="ev=>sendForm(ev,'register')" id="reg" type="button">Register</button>
+        </div>
+    </form>
+</main>
