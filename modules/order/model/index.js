@@ -49,12 +49,12 @@ module.exports = {
     }
     return new Promise((resolve, reject) => {
         db.run(`UPDATE orders
-                    SET status = 'Canceled'
+                    SET status = 'Cancelled'
                     WHERE id = ?`,[id],function (err) {
             if (err) {
                 reject(err.message);
             } else {
-                resolve(`Order with ID ${id} Canceled.`);
+                resolve(`Order with ID ${id} Cancelled.`);
             }
         });
     });

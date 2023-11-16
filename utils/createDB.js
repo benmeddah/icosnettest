@@ -16,7 +16,7 @@ db.serialize(() => {
             price REAL,
             id_client varchar(256),
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-            status varchar(256) DEFAULT 'Pending' CHECK(status IN ('Pending', 'Processing', 'Shipped', 'Delivered')),
+            status varchar(256) DEFAULT 'Pending' CHECK(status IN ('Pending', 'Processing', 'Shipped', 'Delivered','Cancelled')),
             FOREIGN KEY (id_client) REFERENCES client(id)
         )
     `);

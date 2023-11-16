@@ -3,7 +3,7 @@
         return {
             cancelOrder: async function(ev) {
                       const jsonData = {
-                  status: 'Canceled'
+                  status: 'Cancelled'
               };
                 try {
                     const response = await fetch('/order/'+location.pathname.split('/')[2], {
@@ -15,7 +15,7 @@
                     });
           
                     if (response.ok) { 
-                        alert('Order Canceled!');
+                        alert('Order Cancelled!');
                         this.fetchOrder();
                     } else {
                       alert('Error Canceling order. Please try again.');
@@ -57,7 +57,8 @@
                     const response = await fetch('/order/'+location.pathname.split('/')[2]);
                     const data = await response.json();
                     this.order = data.order;
-                    console.log(data.order);
+                    if(!data.order)
+                    throw new Error('order not exist');
                 } catch (error) {
                     console.error('Error fetching order:', error);
                     alert('order not exist');
@@ -90,6 +91,11 @@
             </tr>
         </table>
         <section class="create" style="padding: 12px;">
+            <template x-if="order?.status=='Cancelled'">
+                <label>Cancelled</label>
+            </template>
+            <template x-if="order?.status!='Cancelled'">
+                
             <form @submit.prevent="sendForm">
               <h2>Update Order</h2>
           
@@ -114,5 +120,7 @@
               <button type="submit">Submit Order</button>
               <button @click="cancelOrder" type="button" style="margin-left: 50px; background-color: chocolate;">Cancel</button>
             </form>
+            </template>
           </section>
+        
     </div>
