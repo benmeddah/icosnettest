@@ -65,5 +65,25 @@ module.exports = {
             }
         });
     });
+},
+deleteOrder(id) {
+    if (id === undefined) {
+        return false; // Invalid ID
+    }
+
+    return new Promise((resolve, reject) => {
+
+        db.run('DELETE FROM orders WHERE id = ?', [id], function (err) {
+            if (err) {
+                reject(err.message);
+            } else {
+                if (this.changes > 0) {
+                    resolve(`Order with ID ${id} deleted successfully.`);
+                } else {
+                    reject(`Order with ID ${id} not found.`);
+                }
+            }
+        });
+    });
 }
 }

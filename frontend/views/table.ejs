@@ -12,6 +12,21 @@
                     console.error('Error fetching orders:', error);
                 }
             },
+            deleteHandler: async function(id){
+                try {
+                const response = await fetch('/order/'+id,{
+                    method:'DELETE'
+                });
+                if (response.ok) {
+                alert('Order deleted successfully!');
+                this.fetchOrders();
+                } else {
+                alert('Error deleting order. Please try again.');
+                }
+                } catch (error) {
+                    console.error('Error deleting order:', error);
+                }
+            }
         };
     }
 </script>
@@ -39,6 +54,7 @@
                     <td x-text="order.status"></td>
                     <td>
                         <a :href="'/single/'+order.id">view</a>
+                        <button type="button" @click="deleteHandler(order.id)">delete</button>
                     </td>
                 </tr>
             </template>
