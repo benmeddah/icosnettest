@@ -8,7 +8,7 @@ const read = require('./controllers/read')
 const deleteMW = require('./controllers/delete').deleteO
 
 OrderRoute.route('/')
-.get(read.readAll)
+.get(read.searchByTitle)
 .post(createMW);
 
 OrderRoute.route('/:id')

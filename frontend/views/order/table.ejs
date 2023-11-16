@@ -2,9 +2,16 @@
     function xData() {
         return {
             orders: [],
+            keyword:'',
+            clear:function(){
+                this.keyword = '';
+                setTimeout(() => {
+                    this.fetchOrders();
+                }, 50);
+            },
             fetchOrders: async function () {
                 try {
-                    const response = await fetch('/order');
+                    const response = await fetch('/order?keyword='+(keyword.value??''));
                     const data = await response.json();
                     console.log(data);
                     this.orders = data.orders;
@@ -32,7 +39,9 @@
 </script>
 <main x-data="xData()" x-init="fetchOrders">
     <h2>All Orders</h2>
-
+    <input type="search" name="keyword" id="keyword" x-model="keyword">
+    <button type="button" @click="fetchOrders">Search</button>
+    <button type="button" @click="clear">clear</button>
     <table>
         <thead>
             <tr>

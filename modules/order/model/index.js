@@ -85,5 +85,21 @@ deleteOrder(id) {
             }
         });
     });
-}
+},
+searchOrder(keyword) {
+   /* if (!keyboard) {
+        return {orders:[]}; // Invalid ID
+    }*/
+
+    return new Promise((resolve, reject) => {
+        db.all(`select * FROM orders ${(keyword?"WHERE title LIKE '%" +keyword +"%'":'')}`, function (err, rows) {
+            if (err) {
+                reject(err.message);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+},
+
 }

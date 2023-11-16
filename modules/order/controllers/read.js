@@ -24,4 +24,15 @@ module.exports = {
             rep.status(404).send({msg:false,err:error.message})
         }
 	},
+    searchByTitle: async (req, rep,next) => {
+		try {
+            console.log(req.query);
+            const x = await model.searchOrder(req.query.keyword);
+            if(x) rep.send({orders:x})
+            else throw new Error("error db")
+        } catch (error) {
+            console.log(error);
+            rep.status(404).send({msg:false,err:error.message})
+        }
+	},
 };
